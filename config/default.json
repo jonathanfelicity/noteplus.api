@@ -1,0 +1,5 @@
+{
+	"name": "note+", 
+	"port": "419",
+	"dbUri": "mongodb://localhost:27017/node+"
+}
