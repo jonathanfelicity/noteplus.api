@@ -20,7 +20,7 @@ const createNote = (req, res)=>{
 }
 
 // GETTING ALL NOTES
-getAllNote = (req, res)=>{
+const getAllNote = (req, res)=>{
 	Note.find()
 		.then((results)=>{
 			res.json(results)
@@ -31,7 +31,7 @@ getAllNote = (req, res)=>{
 }
 
 // GETTING SINGLE NOTE
-getSingleNote = (req, res)=>{
+const getSingleNote = (req, res)=>{
 	Note.findById(req.params.id)
 		.then((results)=>{
 			res.json(results)
@@ -39,4 +39,36 @@ getSingleNote = (req, res)=>{
 		.catch((err)=>{
 			if(err) throw err
 	})
+}
+
+// UPDATING NOTE
+const updateNote = (req, res)=>{
+	const { title, body, author } = req.body
+	Note.findByIdAndUpdate(req.params.id)
+		.then((results)=>{
+			res.json(results)
+		})
+		.catch((err)=>{
+			if(err) throw err   
+		})
+}
+
+// DELETING NOTE
+const deleteNote = (req, res)=>{
+	Note.findByIdAndDelete(req.params.id)
+		.then((results)=>{
+			res.json(results)
+		})
+		.catch((err)=>{
+			if(err) throw err
+		})
+}
+
+
+module.exports = {
+	createNote,
+	getAllNote,
+	getSingleNote,
+	updateNote,
+	deleteNote
 }

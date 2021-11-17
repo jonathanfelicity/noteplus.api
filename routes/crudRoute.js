@@ -1,73 +1,25 @@
 const { Router } = require('express')
 const mongoose = require('mongoose')
 const Note = require('../models/noteModel')
+const crudController = require('../controllers/crudController')
 
 
 const router = Router()
 
 // CREATING NEW NOTE 
-router.post('/', (req, res)=>{
-	const { title, body, author } = req.body
-	const note = new Note({
-		title: title,
-		body: body,
-		author: author
-	})
-	note.save()
-	.then((result)=>{
-		res.json(result)
-	})
-	.catch((err)=>{
-		if(err) throw err
-	})
-})
+router.post('/', crudController.createNote)
 
 // GETTING ALL NOTES
-router.get('/', (req, res)=>{
-	Note.find()
-		.then((results)=>{
-			res.json(results)
-		})
-		.catch((err)=>{
-			if(err) throw err
-		})
-})
+router.get('/', crudController.getAllNote)
 
 // GETING SINGLE NOTE
-router.get('/:id?', (req, res)=>{
-	Note.findById(req.params.id)
-	.then((results)=>{
-		res.json(results)
-	})
-	.catch((err)=>{
-		if(err) throw err
-	})
-})
-
-
+router.get('/:id?', crudController.getSingleNote)
 
 // UPDATING NOTE
-router.put('/', (req, res)=>{
-	const { title, body, author } = req.body
-	Note.findByIdAndUpdate(req.params.id)
-		.then((results)=>{
-			res.json(results)
-		})
-		.catch((err)=>{
-			if(err) throw err   
-		})
-})
+router.put('/', crudController.updateNote)
    
 // DELETING NOTE
-router.delete('/:id?', (req, res)=>{
-	Note.findByIdAndDelete(req.params.id)
-		.then((results)=>{
-			res.json(results)
-		})
-		.catch((err)=>{
-			if(err) throw err
-		})
-})
+router.delete('/:id?', crudController.deleteNote)
 
 
 module.exports = router
